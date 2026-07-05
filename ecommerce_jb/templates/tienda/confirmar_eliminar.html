@@ -1,0 +1,67 @@
+{% extends 'tienda/base.html' %}
+{% block title %}Eliminar {{ producto.nombre }} — JB Store{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="bg-white rounded border overflow-hidden">
+
+            <!-- CABECERA -->
+            <div class="px-4 py-3"
+                 style="background:#dc3545; color:#fff; font-weight:700;">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                Confirmar eliminación
+            </div>
+
+            <div class="p-4 text-center">
+
+                {% if producto.imagen %}
+                <img src="{{ producto.imagen.url }}"
+                     style="width:100px; height:100px; object-fit:contain;
+                            border:1px solid #eee; border-radius:8px;
+                            padding:6px; margin-bottom:16px;">
+                {% else %}
+                <i class="bi bi-box-seam"
+                   style="font-size:4rem; color:#ddd; display:block;
+                          margin-bottom:16px;"></i>
+                {% endif %}
+
+                <h5 style="font-weight:800; color:#1E0F3C;">
+                    {{ producto.nombre }}
+                </h5>
+                <p class="text-muted" style="font-size:.9rem;">
+                    {{ producto.precio_clp }} —
+                    Stock: {{ producto.stock }} unidades
+                </p>
+
+                <div class="alert"
+                     style="background:#fff5f5; border:1px solid #dc3545;
+                            border-radius:6px; color:#dc3545; font-size:.88rem;">
+                    <i class="bi bi-exclamation-circle-fill"></i>
+                    Esta acción <strong>no se puede deshacer</strong>.
+                    El producto será eliminado permanentemente.
+                </div>
+
+                <!-- BOTONES -->
+                <div class="d-flex gap-3 mt-3">
+                    <a href="{% url 'tienda:catalogo' %}"
+                       class="btn btn-outline-secondary flex-fill">
+                        <i class="bi bi-arrow-left"></i> Cancelar
+                    </a>
+                    <form action="{% url 'tienda:eliminar_producto' producto.pk %}"
+                          method="post" class="flex-fill">
+                        {% csrf_token %}
+                        <button type="submit"
+                                class="btn btn-danger w-100 fw-bold">
+                            <i class="bi bi-trash3"></i> Sí, eliminar
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

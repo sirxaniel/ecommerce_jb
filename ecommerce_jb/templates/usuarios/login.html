@@ -1,0 +1,78 @@
+{% extends 'tienda/base.html' %}
+{% block title %}Iniciar Sesión — JB Store{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-5 col-lg-4">
+
+        <div class="bg-white rounded border overflow-hidden">
+
+            <!-- CABECERA -->
+            <div class="text-center py-4"
+                 style="background: linear-gradient(135deg, #1E0F3C, #4A2C8F);">
+                <div style="font-size:2.5rem;">⚡</div>
+                <h4 style="color:#FFD700; font-weight:800; margin:4px 0;">JB Store</h4>
+                <p style="color:#ccc; font-size:.85rem; margin:0;">
+                    Inicia sesión en tu cuenta
+                </p>
+            </div>
+
+            <!-- FORMULARIO -->
+            <div class="p-4">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold"
+                               style="font-size:.85rem; color:#2D1B69;">
+                            <i class="bi bi-person"></i> Usuario
+                        </label>
+                        <input type="text" name="username"
+                               class="form-control"
+                               style="border-color:#4A2C8F;"
+                               placeholder="Tu nombre de usuario"
+                               autofocus required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold"
+                               style="font-size:.85rem; color:#2D1B69;">
+                            <i class="bi bi-lock"></i> Contraseña
+                        </label>
+                        <input type="password" name="password"
+                               class="form-control"
+                               style="border-color:#4A2C8F;"
+                               placeholder="Tu contraseña"
+                               required>
+                    </div>
+
+                    {% if form.errors %}
+                    <div class="alert alert-danger py-2" style="font-size:.85rem;">
+                        <i class="bi bi-exclamation-circle"></i>
+                        Usuario o contraseña incorrectos.
+                    </div>
+                    {% endif %}
+
+                    <button type="submit" class="btn-agregar"
+                            style="font-size:.95rem; padding:12px;">
+                        <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
+                    </button>
+                </form>
+
+                <hr class="my-3">
+
+                <p class="text-center mb-0" style="font-size:.88rem; color:#666;">
+                    ¿No tienes cuenta?
+                    <a href="{% url 'usuarios:registro' %}"
+                       style="color:#4A2C8F; font-weight:700;">
+                        Regístrate aquí
+                    </a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

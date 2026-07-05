@@ -1,0 +1,124 @@
+{% extends 'tienda/base.html' %}
+{% block title %}Editar {{ producto.nombre }} — JB Store{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+
+        <!-- CABECERA -->
+        <div class="d-flex align-items-center gap-2 mb-4">
+            <i class="bi bi-pencil-square" style="font-size:1.5rem; color:#2D1B69;"></i>
+            <h2 style="font-weight:800; color:#2D1B69; margin:0;">
+                Editar Producto
+            </h2>
+        </div>
+
+        <div class="bg-white rounded border overflow-hidden">
+
+            <div class="px-4 py-3"
+                 style="background:#2D1B69; color:#fff; font-weight:700;">
+                <i class="bi bi-box-seam"></i> {{ producto.nombre }}
+            </div>
+
+            <form action="{% url 'tienda:editar_producto' producto.pk %}"
+                  method="post" enctype="multipart/form-data"
+                  class="p-4">
+                {% csrf_token %}
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold"
+                               style="font-size:.85rem; color:#2D1B69;">
+                            Nombre del producto *
+                        </label>
+                        {{ form.nombre }}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold"
+                               style="font-size:.85rem; color:#2D1B69;">
+                            Categoría *
+                        </label>
+                        {{ form.categoria }}
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label fw-bold"
+                               style="font-size:.85rem; color:#2D1B69;">
+                            Descripción
+                        </label>
+                        {{ form.descripcion }}
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold"
+                               style="font-size:.85rem; color:#2D1B69;">
+                            Precio (CLP) *
+                        </label>
+                        {{ form.precio }}
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold"
+                               style="font-size:.85rem; color:#2D1B69;">
+                            Stock *
+                        </label>
+                        {{ form.stock }}
+                    </div>
+
+                    <div class="col-md-4 d-flex align-items-end pb-1">
+                        <div class="form-check">
+                            {{ form.disponible }}
+                            <label class="form-check-label fw-bold"
+                                   style="font-size:.85rem; color:#2D1B69;">
+                                Disponible en tienda
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- IMAGEN ACTUAL -->
+                    <div class="col-12">
+                        <label class="form-label fw-bold"
+                               style="font-size:.85rem; color:#2D1B69;">
+                            <i class="bi bi-image"></i> Foto del producto
+                        </label>
+                        {% if producto.imagen %}
+                        <div class="mb-2 d-flex align-items-center gap-3">
+                            <img src="{{ producto.imagen.url }}"
+                                 style="width:80px; height:80px; object-fit:contain;
+                                        border:1px solid #eee; border-radius:6px; padding:4px;">
+                            <span style="font-size:.82rem; color:#888;">
+                                Imagen actual. Sube una nueva para reemplazarla.
+                            </span>
+                        </div>
+                        {% endif %}
+                        {{ form.imagen }}
+                        <div style="font-size:.78rem; color:#888; margin-top:4px;">
+                            Formatos: JPG, PNG, WEBP. Máx 5MB.
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- BOTONES -->
+                <div class="d-flex gap-3 mt-4">
+                    <a href="{% url 'tienda:catalogo' %}"
+                       class="btn btn-outline-secondary flex-fill text-center">
+                        <i class="bi bi-arrow-left"></i> Cancelar
+                    </a>
+                    <button type="submit"
+                            style="background:#2D1B69; color:#FFD700; border:none;
+                                   border-radius:6px; padding:10px 28px;
+                                   font-weight:700; cursor:pointer; flex:1;">
+                        <i class="bi bi-check-circle"></i> Guardar cambios
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

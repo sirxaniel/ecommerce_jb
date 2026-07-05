@@ -1,0 +1,71 @@
+{% extends 'tienda/base.html' %}
+{% block title %}Crear Cuenta — JB Store{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+
+        <div class="bg-white rounded border overflow-hidden">
+
+            <!-- CABECERA -->
+            <div class="text-center py-4"
+                 style="background: linear-gradient(135deg, #1E0F3C, #4A2C8F);">
+                <div style="font-size:2.5rem;">⚡</div>
+                <h4 style="color:#FFD700; font-weight:800; margin:4px 0;">JB Store</h4>
+                <p style="color:#ccc; font-size:.85rem; margin:0;">
+                    Crea tu cuenta gratis
+                </p>
+            </div>
+
+            <!-- FORMULARIO -->
+            <div class="p-4">
+                <form method="post">
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label fw-bold"
+                               style="font-size:.85rem; color:#2D1B69;">
+                            {{ field.label }}
+                        </label>
+                        <input type="{{ field.field.widget.input_type }}"
+                               name="{{ field.html_name }}"
+                               class="form-control {% if field.errors %}is-invalid{% endif %}"
+                               style="border-color:#4A2C8F;"
+                               placeholder="{{ field.label }}"
+                               {% if forloop.first %}autofocus{% endif %}>
+                        {% for error in field.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger py-2" style="font-size:.85rem;">
+                        {{ form.non_field_errors }}
+                    </div>
+                    {% endif %}
+
+                    <button type="submit" class="btn-agregar mt-2"
+                            style="font-size:.95rem; padding:12px;">
+                        <i class="bi bi-person-check"></i> Crear cuenta
+                    </button>
+                </form>
+
+                <hr class="my-3">
+
+                <p class="text-center mb-0" style="font-size:.88rem; color:#666;">
+                    ¿Ya tienes cuenta?
+                    <a href="{% url 'usuarios:login' %}"
+                       style="color:#4A2C8F; font-weight:700;">
+                        Inicia sesión aquí
+                    </a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
